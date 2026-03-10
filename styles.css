@@ -1,0 +1,443 @@
+:root {
+  --bg: transparent;
+  --surface: #000000;
+  --surface2: #000000;
+  --text: #f8f0f6;
+  --accent: #fbb8bd;
+  --accent2: #2756fa;
+  --danger: #d02a3c;
+  --border: #2756fa;
+}
+
+:root {
+  --g1: #fbb8bd;
+  --g2: #2756fa;
+  --g3: #d02a3c;
+}
+
+
+* {
+  box-sizing: border-box;
+  outline: none;
+}
+
+:focus-visible {
+  outline: 2px solid var(--accent2);
+  outline-offset: 1px;
+}
+
+body {
+  margin: 0;
+  font-family: "Inter", "Segoe UI", sans-serif;
+  background: #090b16;
+  color: #f3f4fb;
+}
+
+.app-shell {
+  max-width: 100%;
+  width: 100%;
+  margin: 0;
+  padding: 0.75rem;
+  background: none;
+  border-radius: 0;
+}
+
+.hero {
+  background: rgba(13, 15, 28, 0.95);
+  border: none;
+  border-radius: 10px;
+  padding: 1rem;
+  text-align: center;
+  margin-bottom: 0.75rem;
+  box-shadow: none;
+}
+
+.hero-top {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.hero-mascot {
+  max-height: 96px;
+  border: 2px solid rgba(255, 255, 255, 0.4);
+  border-radius: 12px;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.35);
+}
+
+.hero h1 {
+  margin: 0 0 0.5rem;
+  font-size: 2rem;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.card {
+  background: rgba(16, 22, 42, 0.90);
+  border: none;
+  border-radius: 8px;
+  padding: 0.85rem;
+  margin-bottom: 0.75rem;
+}
+
+h2 {
+  font-size: 1.15rem;
+  margin: 0 0 0.75rem;
+}
+
+.row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  align-items: center;
+}
+
+select,
+input[type="file"] {
+  padding: 0.55rem 0.7rem;
+  border-radius: 8px;
+  background: rgba(39, 86, 250, 0.08);
+  border: 1px solid var(--border);
+  min-width: 220px;
+  color: var(--text);
+}
+
+.btn {
+  background: #fbb8bd;
+  border: none;
+  color: #1d1522;
+  padding: 0.6rem 1rem;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 700;
+  transition: transform 0.12s ease, opacity 0.12s ease;
+}
+
+.filters {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.65rem;
+  margin-bottom: 0.75rem;
+}
+
+.filter-group {
+  display: flex;
+  align-items: center;
+  gap: 0.45rem;
+  flex-wrap: wrap;
+}
+
+.filter-group span {
+  color: #f1f6ff;
+  font-weight: 700;
+}
+
+.filter-btn {
+  background: rgba(255, 255, 255, 0.10);
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  color: #f8f0f6;
+  border-radius: 6px;
+  padding: 0.35rem 0.55rem;
+  cursor: pointer;
+  font-size: 0.78rem;
+}
+
+.filter-btn.active {
+  background: rgba(56, 113, 87, 0.9);
+  color: #eff9f1;
+  border-color: #387157;
+}
+
+.btn:hover {
+  transform: translateY(-1px);
+  opacity: 0.95;
+}
+
+.status {
+  margin-top: 0.5rem;
+  color: var(--accent2);
+}
+
+.planned-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 0.45rem;
+}
+
+.planned-list li {
+  background: rgba(0, 0, 0, 0.5);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 0.65rem 0.75rem;
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 0.45rem;
+  align-items: center;
+}
+
+.race-summary {
+  font-size: 0.95rem;
+}
+
+.race-summary span {
+  color: var(--accent2);
+  font-weight: 600;
+}
+
+.race-meta {
+  font-size: 0.78rem;
+  opacity: 0.82;
+  color: var(--text);
+}
+
+/* .year-box style is declared below with flex layout */
+
+.planned-list li button {
+  border: none;
+  background: var(--danger);
+  color: white;
+  padding: 0.25rem 0.45rem;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.race-calendar {
+  display: block;
+  max-width: 100%;
+  padding-bottom: 0.5rem;
+}
+
+.year-box {
+  width: 100%;
+  background: rgba(25, 30, 50, 0.92);
+  border: none;
+  border-radius: 8px;
+  padding: 0.8rem;
+  margin-bottom: 0.75rem;
+}
+
+.year-box.collapsed .month-row {
+  display: none;
+}
+
+.year-box h3 {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 0 0 0.5rem;
+  color: var(--accent2);
+  cursor: pointer;
+}
+
+.year-box h3 span {
+  font-size: 0.85rem;
+  opacity: 0.8;
+}
+
+
+.year-box h3 {
+  margin: 0 0 0.5rem;
+  color: var(--accent2);
+}
+
+.month-row {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0.45rem;
+}
+
+.month-cell {
+  background: transparent;
+  border: none;
+  border-radius: 0;
+  padding: 0.3rem;
+  min-height: 0;
+  height: auto;
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  width: max-content;
+  max-width: none;
+  overflow: visible;
+}
+.race-calendar .month-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.9rem;
+}
+
+.month-cell h4 {
+  margin: 0 0 0.25rem;
+  font-size: 0.8rem;
+}
+
+.race-btn {
+  display: inline-flex;
+  width: auto;
+  min-height: 0;
+  height: auto;
+  border: none;
+  background: transparent;
+  color: #f8f0f6;
+  border-radius: 0;
+  margin: 0;
+  padding: 0;
+  justify-content: center;
+  gap: 0.45rem;
+  text-align: center;
+  cursor: pointer;
+  font-size: 0.78rem;
+  overflow: hidden;
+  box-shadow: none;
+}
+.race-btn:focus-visible, .race-btn:focus {
+  outline: none;
+  box-shadow: none;
+}
+
+.race-btn.has-banner {
+  padding: 0;
+  justify-content: center;
+  align-items: center;
+  min-height: auto;
+  height: auto;
+  width: auto;
+  max-width: none;
+  max-height: none;
+  background: transparent;
+  border: none;
+  margin-bottom: 0;
+  overflow: hidden;
+}
+.race-btn.has-banner .race-banner {
+  display: block;
+  width: 100%;
+  height: auto;
+  max-width: none;
+  max-height: none;
+  object-fit: contain;
+}
+.race-btn.no-banner {
+  display: inline-flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  min-height: 80px;
+  height: auto;
+  width: auto;
+  max-width: none;
+  max-height: none;
+  border: none;
+  padding: 0.25rem 0.35rem;
+  background: rgba(20, 28, 52, 0.85);
+  box-shadow: none;
+}
+
+.race-btn.has-banner .race-info,
+.race-btn.has-banner .race-icon {
+  display: none;
+}
+
+.race-btn.no-banner {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  min-height: 80px;
+  height: auto;
+  max-width: none;
+  max-height: none;
+}
+
+.race-banner {
+  display: block;
+  width: auto;
+  max-width: none;
+  max-height: none;
+  height: auto;
+  object-fit: none;
+}
+
+.race-btn.selected {
+  background: rgba(56, 113, 87, 0.55);
+  border-color: #387157;
+  color: #e8f7ec;
+}
+
+.race-btn.has-banner {
+  padding: 0.3rem;
+  justify-content: center;
+  min-height: 90px;
+}
+
+.race-btn.no-banner {
+  min-height: 90px;
+  text-align: center;
+}
+
+.race-btn.g1 {
+  transform: scale(1.04);
+  font-size: 0.92rem;
+  border-width: 1.5px;
+  padding: 0.52rem 0.55rem;
+}
+
+.race-btn.g2,
+.race-btn.g3 {
+  transform: scale(1);
+}
+
+.month-cell {
+  overflow: hidden;
+  min-height: 40px;
+}
+
+.race-icon {
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+  font-weight: 700;
+  font-size: 0.85rem;
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.race-info small {
+  color: #c0c8e6;
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+.race-btn:hover { transform: translateY(-1px); }
+
+#epithetList p,
+#epithetList li {
+  margin: 0.25rem 0;
+}
+
+@media (max-width: 720px) {
+  .row {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .btn, select {
+    width: 100%;
+  }
+}

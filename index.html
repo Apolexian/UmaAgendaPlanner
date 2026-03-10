@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Uma Agenda - Umamusume Race Planner</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div class="app-shell">
+    <header class="hero">
+      <div class="hero-top">
+        <img src="Symboli_Rudolf_(Main).webp" alt="mactott mascot" class="hero-mascot" />
+        <div>
+          <h1>Uma Agenda</h1>
+          <p>Plan your Umamusume career races, check epithets and save/load locally.</p>
+        </div>
+      </div>
+    </header>
+
+    <main>
+      <section class="card panel">
+        <h2>1. Data & Controls</h2>
+        <div class="row">
+          <button id="reloadBtn" class="btn">Reload CSV</button>
+          <button id="saveJsonBtn" class="btn">Save JSON</button>
+          <button id="loadJsonBtn" class="btn">Load JSON</button>
+          <button id="resetBtn" class="btn">Reset Plan</button>
+          <input id="loadFile" type="file" accept="application/json" style="display:none" />
+        </div>
+        <small>Uses <code>Race List - Sheet1.csv</code> in same folder.</small>
+        <div id="status" class="status">Loading races...</div>
+      </section>
+
+      <section class="card panel stats">
+        <h2>Summary</h2>
+        <p>Total planned: <strong id="totalPlanned">0</strong></p>
+        <p>G1: <strong id="g1count">0</strong>, G2: <strong id="g2count">0</strong>, G3: <strong id="g3count">0</strong></p>
+        <div id="epithetList"></div>
+      </section>
+
+      <section class="card panel">
+        <h2>2. Pick races from the calendar</h2>
+        <p>Click any race badge to add it to the plan.</p>
+        <div class="filters">
+          <div class="filter-group" id="gradeFilters">
+            <span>Grade:</span>
+            <button data-filter-type="grade" data-filter-value="G1" class="filter-btn active">G1</button>
+            <button data-filter-type="grade" data-filter-value="G2" class="filter-btn active">G2</button>
+            <button data-filter-type="grade" data-filter-value="G3" class="filter-btn active">G3</button>
+          </div>
+          <div class="filter-group" id="surfaceFilters">
+            <span>Surface:</span>
+            <button data-filter-type="surface" data-filter-value="Turf" class="filter-btn active">Turf</button>
+            <button data-filter-type="surface" data-filter-value="Dirt" class="filter-btn active">Dirt</button>
+          </div>
+          <div class="filter-group" id="lengthFilters">
+            <span>Length:</span>
+            <button data-filter-type="length" data-filter-value="Short" class="filter-btn active">Short</button>
+            <button data-filter-type="length" data-filter-value="Mile" class="filter-btn active">Mile</button>
+            <button data-filter-type="length" data-filter-value="Medium" class="filter-btn active">Medium</button>
+            <button data-filter-type="length" data-filter-value="Long" class="filter-btn active">Long</button>
+          </div>
+        </div>
+        <div id="calendarGrid" class="race-calendar"></div>
+    </main>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>
