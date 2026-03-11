@@ -46,6 +46,7 @@ const bannerFiles = [
   "Osaka Hai.png",
   "Queen Elizabeth II Cup.png",
   "Satsuki Sho.png",
+  "Sprinters Stakes.png",
   "Shuka Sho.png",
   "Takamatsunomiya Kinen.png",
   "Takarazuka Kinen.png",
