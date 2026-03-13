@@ -1,26 +1,32 @@
 const csvFile = "Race List - Sheet1.csv";
+
 const ephis = [
   {
     key: "Classic Triple Crown",
     required: ["Satsuki Sho", "Tokyo Yushun (Japanese Derby)", "Kikuka Sho"],
+    year: "Classic",
     note: "Standard male Triple Crown",
   },
   {
     key: "Triple Tiara",
     required: ["Oka Sho", "Japanese Oaks", "Shuka Sho"],
+    year: "Classic",
     note: "Standard female Triple Tiara",
   },
   {
     key: "Senior Spring Triple Crown",
     required: ["Osaka Hai", "Tenno Sho (Spring)", "Takarazuka Kinen"],
+    year: "Senior",
     note: "Senior stamina path",
   },
   {
     key: "Senior Autumn Triple Crown",
     required: ["Tenno Sho (Autumn)", "Japan Cup", "Arima Kinen"],
+    year: "Senior",
     note: "Senior autumn goal races",
   },
 ];
+
 
 let races = [];
 let plan = [];
@@ -71,6 +77,7 @@ for (const file of bannerFiles) {
   bannerMap[normalize(file.replace(/\.png$/i, ""))] = file;
 }
 
+const getRaceKey = (race) => `${race.Year || "Unknown"}|${race["Race Name"] || ""}`;
 
 const filters = {
   grade: { G1: true, G2: true, G3: true },
@@ -155,7 +162,7 @@ function renderCalendar() {
   const grid = document.getElementById("calendarGrid");
   grid.innerHTML = "";
 
-  const selectedNames = new Set(plan.map((p) => p["Race Name"]));
+  const selectedNames = new Set(plan.map((p) => getRaceKey(p)));
   const byYear = {};
   races.forEach((race) => {
     const year = race.Year || "Unknown";
@@ -225,7 +232,7 @@ function renderCalendar() {
         if (type && type !== surface) details.push(type);
         if (distance) details.push(distance);
         const summary = details.join(" • ");
-        const selected = selectedNames.has(raceName);
+        const selected = selectedNames.has(getRaceKey(race));
         if (selected) btn.classList.add("selected");
         const normalizedName = normalize(raceName);
         const bannerFile = bannerMap[normalizedName];
@@ -283,7 +290,7 @@ function renderCalendar() {
         }
 
         btn.title = `${raceName} | ${race.Grade} | ${summary}`;
-        btn.setAttribute("data-race", raceName);
+        btn.setAttribute("data-race", getRaceKey(race));
         cell.appendChild(btn);
       });
       monthRow.appendChild(cell);
@@ -295,26 +302,48 @@ function renderCalendar() {
 }
 
 function detectEpithets() {
-  const target = new Set(plan.map((p) => p["Race Name"].toLowerCase()));
+  const yearMap = {
+    "First Year": "Junior",
+    "Second Year": "Classic",
+    "Third Year": "Senior", 
+  };
+
   const found = [];
+
   ephis.forEach((e) => {
-    const missing = e.required.filter((v) => !target.has(v.toLowerCase()));
-    if (missing.length === 0) {
-      found.push({ name: e.key, note: e.note, complete: true, missing: [] });
-    } else {
-      found.push({ name: e.key, note: e.note, complete: false, missing });
-    }
+    // Only consider races whose CSV year maps to the epiphet year
+    const eligible = plan.filter(
+      (r) => (yearMap[r.Year] || r.Year).toLowerCase() === e.year.toLowerCase()
+    );
+
+    // Track race names only in this year
+    const names = new Set(eligible.map((r) => r["Race Name"]));
+
+    // Which required races are missing in this epiphet year
+    const missing = e.required.filter((name) => !names.has(name));
+
+    found.push({
+      name: e.key,
+      note: e.note,
+      complete: missing.length === 0,
+      missing,
+    });
   });
+
   return found;
 }
 
 function syncCalendarSelection() {
-  const selectedNames = new Set(plan.map((p) => p["Race Name"]));
+  const selectedKeys = new Set(plan.map((p) => getRaceKey(p)));
+
   document.querySelectorAll("button.race-btn").forEach((btn) => {
-    const raceName = btn.getAttribute("data-race");
-    if (!raceName) return;
-    const isSelected = selectedNames.has(raceName);
+    const key = btn.getAttribute("data-race");
+    if (!key) return;
+
+    const isSelected = selectedKeys.has(key);
+
     btn.classList.toggle("selected", isSelected);
+
     const icon = btn.querySelector(".race-icon");
     if (icon) icon.textContent = isSelected ? "−" : "+";
   });
@@ -382,14 +411,21 @@ function addRaceByName(name) {
   updateStatus(`Added '${name}' to plan.`);
 }
 
-function toggleRaceSelection(name) {
-  if (plan.some((p) => p["Race Name"] === name)) {
-    plan = plan.filter((p) => p["Race Name"] !== name);
-    renderPlan();
-    updateStatus(`Removed '${name}' from plan.`);
+function toggleRaceSelection(key) {
+  const race = races.find((r) => getRaceKey(r) === key);
+  if (!race) return;
+
+  const exists = plan.some((p) => getRaceKey(p) === key);
+
+  if (exists) {
+    plan = plan.filter((p) => getRaceKey(p) !== key);
+    updateStatus(`Removed '${race["Race Name"]}' from plan.`);
   } else {
-    addRaceByName(name);
+    plan.push(race);
+    updateStatus(`Added '${race["Race Name"]}' to plan.`);
   }
+
+  renderPlan();
 }
 
 async function loadRaceCSV() {
