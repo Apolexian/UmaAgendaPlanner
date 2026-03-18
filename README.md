@@ -1,3 +1,7 @@
+# DEPRECATED
+
+Note, this has been archived as it was incorporated and improved in https://uma.guide/agenda-planner/.
+
 # Uma Agenda - Umamusume Race Planner
 
 A small static web app for planning Umamusume race schedules with epithets tracking, G1 item banners, and save/load features.
